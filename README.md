@@ -3,12 +3,12 @@
 
 two methods are used to upload files
 
-- buffering 
+### buffering 
  * buffering method is better approach for small files
  * not recommended for large files because it allocates server resources at once
 
 
-- streming
+### streaming
  * buffering method is better approach for large files
  * data comes in a stream
  * you cannot implicit model binding with streming aproach
