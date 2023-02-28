@@ -24,5 +24,5 @@ two methods are used to upload files
 ![uml](https://github.com/hasanbaysal/Streaming-And-Buffering-Approaches-File-Upload-/blob/master/ss/1.png)
 ![uml](https://github.com/hasanbaysal/Streaming-And-Buffering-Approaches-File-Upload-/blob/master/ss/2.png)
 ![uml](https://github.com/hasanbaysal/Streaming-And-Buffering-Approaches-File-Upload-/blob/master/ss/3.png)
-![uml](https://github.com/hasanbaysal/Streaming-And-Buffering-Approaches-File-Upload-/blob/master/ss/31.png)
+![uml](https://github.com/hasanbaysal/Streaming-And-Buffering-Approaches-File-Upload-/blob/master/ss/31png.png)
 ![uml](https://github.com/hasanbaysal/Streaming-And-Buffering-Approaches-File-Upload-/blob/master/ss/4.png)
