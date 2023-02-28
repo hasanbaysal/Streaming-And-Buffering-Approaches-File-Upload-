@@ -1,0 +1,69 @@
+﻿@{
+    ViewData["Title"] = "SingeİmageAddBuffered";
+}
+@model SingleImageProductViewModel
+<h1>Singe İmage Add Buffered</h1>
+
+@if (TempData["status"] != null)
+{
+    <div class="alert alert-success">
+
+        @TempData["status"]
+
+    </div>
+
+}
+
+
+<form asp-action="SingeİmageAddBuffered" asp-controller="Product" method="post" enctype="multipart/form-data">
+
+
+    <div asp-validation-summary="ModelOnly">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"> Product Name: </label>
+        <input asp-for="Name" class="form-control" />
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="formFileLg" class="form-label">Product İ</label>
+        <input class="form-control form-control-lg" asp-for="Image" type="file">
+    </div>
+
+
+    <button class="btn btn-primary" type="submit">kaydet</button>
+</form>
+
+
+
+
+
+
+@if (ViewBag.data != null)
+{
+    <table class=" table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>İmage</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.data as List<SingleImageProduct>)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>  <img style="width:100px; height:100px;" src="/images/@item.ImagePath" /> </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}
+

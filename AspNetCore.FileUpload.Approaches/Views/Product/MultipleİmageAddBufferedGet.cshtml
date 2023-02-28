@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewData["Title"] = "MultipleİmageAddBufferedGet";
+}
+@model MultipleImageProductViewModel
+
+<h1>Multiple İmage Add Buffered Get</h1>
+
+
+@if (TempData["status"] != null)
+{
+    <div class="alert alert-success">
+
+        @TempData["status"]
+
+    </div>
+
+}
+
+
+<form asp-action="MultipleİmageAddBufferedGet" asp-controller="Product" method="post" enctype="multipart/form-data">
+
+
+    <div asp-validation-summary="ModelOnly">
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"> Product Name: </label>
+        <input asp-for="Name" class="form-control" />
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+
+    <div class="mb-3">
+        <label for="formFileLg" class="form-label">Product Image</label>
+        <input class="form-control form-control-lg"  asp-for="Images" type="file" multiple>
+    </div>
+
+
+    <button class="btn btn-primary" type="submit">kaydet</button>
+</form>
+
+
+
+
+
+
+
+
+
+
+@if (ViewBag.data != null)
+{
+ 
+
+
+
+
+
+
+    <table class=" table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>İmage</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.data as List<MultipleImageProduct>)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>
+                        <ul>
+                            @foreach (var item2 in item.MultipleImageProductPaths)
+                            {
+                                <li>
+                                    <img style="width:100px; height:100px;" src="/images/@item2.Path" />
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+
+
+
+
+
+
+}
+

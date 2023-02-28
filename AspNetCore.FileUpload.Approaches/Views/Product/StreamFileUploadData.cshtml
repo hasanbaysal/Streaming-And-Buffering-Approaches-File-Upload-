@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "StreamFileUploadData";
+}
+
+<h1>StreamFileUploadData</h1>
+
+@model StreamUploadImageProductViewModel
+
+<h3>in this example
+Since there is no explicit modelbinding in the streaming method, image uploading was done as a separate operation.
+</h3>
+
+<form asp-action="StreamFileUploadData" asp-controller="Product" method="post" enctype="multipart/form-data">
+
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Product Name :</label>
+        <input class="form-control form-control-lg" asp-for="Name">
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Product Descriptipn :</label>
+        <input class="form-control form-control-lg" asp-for="Description" >
+    </div>
+
+
+    <button class="btn btn-primary" type="submit">Next Step image upload</button>
+</form>
+
+
+
+
+
+
+
+
+
+@if (ViewBag.data != null)
+{
+    <table class=" table">
+        <thead>
+            <tr>
+                <td>ID</td>
+                <td>Name</td>
+                <td>Description</td>
+                <td>İmage</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in ViewBag.data as List<StreamUploadImageProduct>)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>   <img style="width:100px; height:100px;" src="/images/@item.ImagePath" /> </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}

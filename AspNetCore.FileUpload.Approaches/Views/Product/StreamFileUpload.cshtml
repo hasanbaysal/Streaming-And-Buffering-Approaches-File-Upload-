@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewData["Title"] = "StreamFileUpload";
+}
+
+<h1>StreamFileUpload</h1>
+
+
+
+<form asp-action="StreamFileUploadP" asp-controller="Product" method="post" enctype="multipart/form-data">
+
+
+    <div class="mb-3">
+        <label for="formFileLg" class="form-label">Product İmage :</label>
+        <input class="form-control form-control-lg" name="file"  type="file">
+    </div>
+
+
+    <button class="btn btn-primary" type="submit">kaydet</button>
+</form>
