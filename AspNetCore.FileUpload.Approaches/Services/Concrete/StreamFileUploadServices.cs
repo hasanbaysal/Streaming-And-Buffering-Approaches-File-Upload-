@@ -38,8 +38,12 @@ namespace AspNetCore.FileUpload.Approaches.Services.Concrete
                     var hasContentDispositionHeader =
                         System.Net.Http.Headers.ContentDispositionHeaderValue.TryParse(section.ContentDisposition, out var contentDisposition);
 
+                    var item = contentDisposition;
+
                     if (hasContentDispositionHeader)
                     {
+                     
+
                         if (contentDisposition.DispositionType.Equals("form-data") &&
                         (!string.IsNullOrEmpty(contentDisposition.FileName) ||
                         !string.IsNullOrEmpty(contentDisposition.FileNameStar)))

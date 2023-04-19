@@ -47,13 +47,13 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
         }
 
         [HttpPost]
-        public async  Task<IActionResult> SingeİmageAddBuffered(SingleImageProductViewModel vm)
+        public async Task<IActionResult> SingeİmageAddBuffered(SingleImageProductViewModel vm)
         {
 
-              var path = Guid.NewGuid() + Path.GetExtension(vm.Image?.FileName);
-              var result =  await _singleBufferUpload.UploadFile(vm.Image!,path);
+            var path = Guid.NewGuid() + Path.GetExtension(vm.Image?.FileName);
+            var result = await _singleBufferUpload.UploadFile(vm.Image!, path);
 
-            if(result)
+            if (result)
             {
                 _context.SingleImageProducts.Add(new SingleImageProduct()
                 {
@@ -64,14 +64,14 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
                 TempData["status"] = "image upload successful";
             }
 
-         
+
             return RedirectToAction(nameof(SingeİmageAddBufferedGet));
         }
 
 
         public IActionResult MultipleİmageAddBufferedGet()
         {
-          var data = _context.MultipleImageProducts.Include(x => x.MultipleImageProductPaths).ToList();
+            var data = _context.MultipleImageProducts.Include(x => x.MultipleImageProductPaths).ToList();
             ViewBag.data = data;
             return View();
         }
@@ -79,7 +79,7 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
         [HttpPost]
         public async Task<IActionResult> MultipleİmageAddBufferedGet(MultipleImageProductViewModel vm)
         {
-            
+
 
             var result = await _multipleBufferUpload.UploadFileMultipleApproachAsync(vm.Images);
 
@@ -93,11 +93,11 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
                 {
                     Name = vm.Name,
                 };
-                var allPath= result.Select(x => new MultipleImageProductPath()
+                var allPath = result.Select(x => new MultipleImageProductPath()
                 {
                     Path = x
                 }).ToList();
-                
+
                 multipleImageProduct.MultipleImageProductPaths = allPath;
 
                 _context.MultipleImageProducts.Add(multipleImageProduct);
@@ -105,10 +105,10 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
                 TempData["status"] = "image upload successful";
 
             };
-               
 
 
-            
+
+
 
             return RedirectToAction(nameof(MultipleİmageAddBufferedGet));
 
@@ -155,9 +155,19 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
         public async Task<IActionResult> StreamFileUploadP()
         {
 
-            var boundary = HeaderUtilities.RemoveQuotes(
-             MediaTypeHeaderValue.Parse(Request.ContentType).Boundary
-            ).Value;
+
+            var Path = Request.Path;
+            var Headers = Request.Headers;
+            var ContentType = Request.ContentType;
+            var Scheme = Request.Scheme;
+            var ContentLength = Request.ContentLength;
+            var Cookies = Request.Cookies;
+            var Body = Request.Body;
+            var HasFormContentType = Request.HasFormContentType;
+            var Host = Request.Host;
+            var Protocol = Request.Protocol;
+
+            var boundary = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).Boundary).Value;
 
 
             var reader = new MultipartReader(boundary, Request.Body);
@@ -166,7 +176,7 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
 
 
 
-          
+
             var result = await _stremFileUpload.UploadFile(reader, section);
 
             if (result != null)
@@ -174,7 +184,7 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
 
                 var id = int.Parse(TempData["_id"].ToString());
 
-                var product =_context.StreamUploadImageProducts.Find(id);
+                var product = _context.StreamUploadImageProducts.Find(id);
 
                 product.ImagePath = result;
 
