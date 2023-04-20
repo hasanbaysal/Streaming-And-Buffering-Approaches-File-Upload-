@@ -38,7 +38,7 @@ namespace AspNetCore.FileUpload.Approaches.Services.Concrete
                     var hasContentDispositionHeader =
                         System.Net.Http.Headers.ContentDispositionHeaderValue.TryParse(section.ContentDisposition, out var contentDisposition);
 
-                    var item = contentDisposition; //öylesine koydum
+              
 
                     if (hasContentDispositionHeader)
                     {
@@ -116,7 +116,7 @@ namespace AspNetCore.FileUpload.Approaches.Services.Concrete
                 var hasContentDispositionHeader =
                        System.Net.Http.Headers.ContentDispositionHeaderValue.TryParse(section.ContentDisposition, out var contentDisposition);
 
-                var item = contentDisposition; //öylesine koydum
+              
                 if (hasContentDispositionHeader)
                 {
                     if (contentDisposition.DispositionType.Equals("form-data") &&
@@ -126,7 +126,7 @@ namespace AspNetCore.FileUpload.Approaches.Services.Concrete
                         //file nameden tırnakları çıkardık
                         var myfilename = HeaderUtilities.RemoveQuotes(contentDisposition.FileName).Value;
 
-                        //fiziksel kayıt yolut
+                        //fiziksel kayıt yolu
                         var storagePathPhysical = Path.Combine(images.PhysicalPath!, guidName + Path.GetExtension(myfilename));
 
                         //veritabanı kayıt yolu
@@ -150,9 +150,7 @@ namespace AspNetCore.FileUpload.Approaches.Services.Concrete
                     else
                     {
                         //model binding yapılacak yer eğer section dosya ile alakalı bir section değil ise
-                        //burada bizim datalarımız ile alakalı ise burada modelbinding yaparıaz
-
-
+                        //burada bizim datalarımız ile alakalı ise burada modelbinding yaparız
                         //multipart olarak gelen model verilerimizi 
                         // contenten disposition bağlığından name değerini alıyoruz
                         //daha sonra section body'den değeri stream olarak okuyoruz
@@ -174,8 +172,6 @@ namespace AspNetCore.FileUpload.Approaches.Services.Concrete
                                 value = string.Empty;
                             }
                             formAccumelator.Append(key, value);
-
-
 
                         }
 

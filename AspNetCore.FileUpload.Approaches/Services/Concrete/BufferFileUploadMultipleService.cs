@@ -13,8 +13,6 @@ namespace AspNetCore.FileUpload.Approaches.Services.Concrete
         }
 
 
-        //if files upload is succsed return pathlist
-        //else return null
         public async Task<List<string>?> UploadFileMultipleApproachAsync(IEnumerable<IFormFile> files)
         {
             var pathList = new List<string>();

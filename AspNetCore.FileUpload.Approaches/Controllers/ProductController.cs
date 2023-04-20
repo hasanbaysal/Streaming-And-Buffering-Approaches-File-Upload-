@@ -162,26 +162,13 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
         {
 
 
-            //var Path = Request.Path;
-            //var Headers = Request.Headers;
-            //var ContentType = Request.ContentType;
-            //var Scheme = Request.Scheme;
-            //var ContentLength = Request.ContentLength;
-            //var Cookies = Request.Cookies;
-            //var Body = Request.Body;
-            //var HasFormContentType = Request.HasFormContentType;
-            //var Host = Request.Host;
-            //var Protocol = Request.Protocol;
+          
 
 
 
             var boundary = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).Boundary).Value;
-            var SubType = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).SubType).Value;
-            var Type = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).Type).Value;
-            var MediaType = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).MediaType).Value;
-            var Charset = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).Charset).Value;
-            var Suffix = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).Suffix).Value;
-
+        
+            
             /*
              
 
