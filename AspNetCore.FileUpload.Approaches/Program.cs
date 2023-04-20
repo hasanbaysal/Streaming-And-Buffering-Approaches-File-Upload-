@@ -1,6 +1,8 @@
 using AspNetCore.FileUpload.Approaches.Models;
 using AspNetCore.FileUpload.Approaches.Services.Abstract;
 using AspNetCore.FileUpload.Approaches.Services.Concrete;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -20,6 +22,19 @@ builder.Services.AddScoped<IBufferFileUploadMultipleApproachService, BufferFileU
 builder.Services.AddScoped<IStreamFileUploadService, StreamFileUploadServices>();
 
 
+
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB
+});
+builder.Services.Configure<FormOptions>(x =>
+{
+    x.ValueLengthLimit = int.MaxValue;
+    x.MultipartBodyLengthLimit = int.MaxValue; // if don't set default value is: 128 MB
+    x.MultipartHeadersLengthLimit = int.MaxValue;
+});
+
+
 var app = builder.Build();
 
 
@@ -32,10 +47,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseRouting();
+
 
 app.UseAuthorization();
 
