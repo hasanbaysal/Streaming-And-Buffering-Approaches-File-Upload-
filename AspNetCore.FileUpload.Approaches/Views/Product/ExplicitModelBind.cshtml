@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewData["Title"] = "ExplicitModelBindPost";
+}
+
+@model ProductStreamApproachV2ViewModel
+<h1>ExplicitModelBindPost</h1>
+
+
+<form asp-action="ExplicitModelBindPost" enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label class="form-label">Name </label>
+        <input class="form-control" asp-for="Name" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description </label>
+        <input class="form-control" asp-for="Description" />
+    </div>
+
+    <div class="mb-3">
+        <label for="formFileLg" class="form-label">Product file :</label>
+        <input class="form-control form-control-lg" name="file" type="file">
+    </div>
+
+    <button class="btn btn-primary" type="submit">kaydet</button>
+
+
+</form>
+
+
+<div class="row">
+
+    <table>
+        <thead><tr>
+            <th> name</th>
+            <th> description</th>
+            <th> file</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+            @{
+                var data = ViewBag.data as List<ProductStreamApproachV2>;
+
+                if (data  != null && data.Count>0)
+                {
+                    @foreach (var item in data)
+                    {
+                        <tr>
+                        
+                            <td>@item.Name</td>
+                            <td>@item.Description</td>
+                            <td>
+                                <img style="width:100px; height:100px;"
+                                src="/images/@item.İmagePath"/>
+                            </td>
+
+                        </tr>
+                    }
+                }
+            }
+
+
+        </tbody>
+    </table>
+
+</div>

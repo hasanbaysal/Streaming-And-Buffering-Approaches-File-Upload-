@@ -9,6 +9,7 @@ using Microsoft.CodeAnalysis.Elfie.Model.Tree;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
 using NuGet.Packaging;
+using System.Runtime.CompilerServices;
 
 namespace AspNetCore.FileUpload.Approaches.Controllers
 {
@@ -151,23 +152,46 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
         }
 
 
+        // request size ayarlamak için bunu program.cs tarafında global olarak yaptım
+        //[RequestFormLimits(ValueLengthLimit = int.MaxValue, MultipartBodyLengthLimit = int.MaxValue)]
+        //[DisableRequestSizeLimit]
+        //[Consumes("multipart/form-data")] // for Zip files with form data
+
         [HttpPost]
         public async Task<IActionResult> StreamFileUploadP()
         {
 
 
-            var Path = Request.Path;
-            var Headers = Request.Headers;
-            var ContentType = Request.ContentType;
-            var Scheme = Request.Scheme;
-            var ContentLength = Request.ContentLength;
-            var Cookies = Request.Cookies;
-            var Body = Request.Body;
-            var HasFormContentType = Request.HasFormContentType;
-            var Host = Request.Host;
-            var Protocol = Request.Protocol;
+            //var Path = Request.Path;
+            //var Headers = Request.Headers;
+            //var ContentType = Request.ContentType;
+            //var Scheme = Request.Scheme;
+            //var ContentLength = Request.ContentLength;
+            //var Cookies = Request.Cookies;
+            //var Body = Request.Body;
+            //var HasFormContentType = Request.HasFormContentType;
+            //var Host = Request.Host;
+            //var Protocol = Request.Protocol;
+
+
 
             var boundary = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).Boundary).Value;
+            var SubType = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).SubType).Value;
+            var Type = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).Type).Value;
+            var MediaType = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).MediaType).Value;
+            var Charset = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).Charset).Value;
+            var Suffix = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).Suffix).Value;
+
+            /*
+             
+
+             content type'dan boundery değerini ayıklıyoruız
+                ---boundery  => mime tpye parameter'dır  boundary değer => multipart/form-data isteklerdeki bölümlerin ayırıcısıdır
+             HeaderUtilities.RemoveQuotes => tırnak işaretlerini kaldırır
+
+            
+             
+             */
 
 
             var reader = new MultipartReader(boundary, Request.Body);
@@ -194,6 +218,53 @@ namespace AspNetCore.FileUpload.Approaches.Controllers
 
             return RedirectToAction("StreamFileUploadData");
         }
+
+        public IActionResult ExplicitModelBind()
+        {
+
+
+            
+            ViewBag.data = _context.productStreamApproachV2s.ToList();
+
+            return   View();
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> ExplicitModelBindPost()
+        {
+
+            var mediatypeheadervalue = MediaTypeHeaderValue.Parse(Request.ContentType);
+
+            var boundary = HeaderUtilities.RemoveQuotes(MediaTypeHeaderValue.Parse(Request.ContentType).Boundary).Value;
+           
+            var reader = new MultipartReader(boundary, Request.Body);
+            var section = await reader.ReadNextSectionAsync();
+
+
+           var (path, value)=  await _stremFileUpload.UploadFileWithExplicitBinding(reader, section,this);
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+
+
+            _context.productStreamApproachV2s.Add(new()
+            {
+                Description = value.Description,
+                Name = value.Name,
+                İmagePath = path
+
+            });
+            _context.SaveChanges();
+
+            return RedirectToAction("ExplicitModelBind");
+        }
+
+
+
 
 
     }

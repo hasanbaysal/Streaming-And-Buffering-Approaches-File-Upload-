@@ -11,8 +11,10 @@ namespace AspNetCore.FileUpload.Approaches.Models
         {
 
         }
+       
 
         public DbSet<SingleImageProduct> SingleImageProducts { get; set; }
+        public DbSet<ProductStreamApproachV2> productStreamApproachV2s { get; set; }
         public DbSet<MultipleImageProductPath> MultipleImageProductPaths { get; set; }
         public DbSet<MultipleImageProduct> MultipleImageProducts { get; set; }
         public DbSet<StreamUploadImageProduct> StreamUploadImageProducts { get; set; }
