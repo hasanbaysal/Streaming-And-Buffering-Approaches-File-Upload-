@@ -27,9 +27,12 @@ two methods are used to upload files
 
 
 #### I added the codes on 20.04.2023
-In the streaming method, the http request comes as a multi-part
-In these parts, you can separate your data according to the boundary value.
-and you can make model binding by reading its data with stream method
+
+in the streaming approach you can retrieve the file you want to upload from the sections of the incoming http request that are split into parts if you also post data other than file information such as the product name within the same request you can create a stream under the relevant section to read this data and then perform an explicit model binding process.
+
+
+
+
 
 
 
